@@ -23,11 +23,6 @@
               600: '#ea580c',
               700: '#c2410c',
               900: '#7c2d12',
-            },
-            charcoal: {
-              800: '#1e1b18',
-              900: '#141210',
-              950: '#0a0908'
             }
           }
         }
@@ -132,9 +127,6 @@
 
     <!-- Store Profile & Status Banner (店家資訊卡) -->
     <section class="bg-gradient-to-r from-stone-900 via-stone-800 to-stone-900 rounded-2xl p-4 sm:p-5 text-white shadow-md border border-stone-700 relative overflow-hidden">
-      <!-- Background Ambient Glow -->
-      <div class="absolute -right-10 -bottom-10 w-48 h-48 bg-orange-600/10 rounded-full blur-3xl pointer-events-none"></div>
-
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-center">
         
         <!-- 1. 營業時間與狀態 -->
@@ -295,32 +287,32 @@
           全部品項 (<span id="countAll">30</span>)
         </button>
         <button onclick="filterCategory('meat')" data-cat="meat" class="cat-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-white hover:bg-orange-50 text-stone-600 hover:text-orange-600 border border-stone-200 transition shrink-0">
-          🥩 嚴選肉串/炭烤
+          嚴選肉串/炭烤
         </button>
         <button onclick="filterCategory('seafood')" data-cat="seafood" class="cat-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-white hover:bg-orange-50 text-stone-600 hover:text-orange-600 border border-stone-200 transition shrink-0">
-          🐟 海鮮類
+          海鮮類
         </button>
         <button onclick="filterCategory('veggie')" data-cat="veggie" class="cat-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-white hover:bg-orange-50 text-stone-600 hover:text-orange-600 border border-stone-200 transition shrink-0">
-          🥬 鮮甜時蔬
+          鮮甜時蔬
         </button>
         <button onclick="filterCategory('classic')" data-cat="classic" class="cat-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-white hover:bg-orange-50 text-stone-600 hover:text-orange-600 border border-stone-200 transition shrink-0">
-          🍢 經典串燒/豆製品
+          經典串燒/豆製品
         </button>
         <button onclick="filterCategory('drink')" data-cat="drink" class="cat-btn px-4 py-2 text-xs sm:text-sm font-medium rounded-xl bg-white hover:bg-orange-50 text-stone-600 hover:text-orange-600 border border-stone-200 transition shrink-0">
-          🍺 飲品與酒類
+          飲品與酒類
         </button>
       </div>
 
       <!-- Search Input -->
       <div class="relative w-full sm:w-64 shrink-0">
         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-stone-400 text-sm"></i>
-        <input type="text" id="menuSearch" oninput="handleSearch()" placeholder="搜尋品項 (如: 雞肉、米血...)" class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-white border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent shadow-sm">
+        <input type="text" id="menuSearch" oninput="handleSearch()" placeholder="搜尋品項 (如: 雞排、米血...)" class="w-full pl-9 pr-4 py-2 text-xs sm:text-sm bg-white border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-400 focus:border-transparent shadow-sm">
       </div>
 
     </div>
 
-    <!-- Menu Items Grid (含精美示意圖卡片) -->
-    <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
+    <!-- Menu Items Grid (純粹清晰的極簡點餐卡片排版) -->
+    <div id="menuGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
       <!-- Dynamically generated via JavaScript -->
     </div>
 
@@ -339,7 +331,6 @@
       
       <!-- Summary Left: Total Count & Breakdown -->
       <div class="flex items-center gap-3 sm:gap-5">
-        <!-- Floating Cart Icon with Badge -->
         <div class="relative cursor-pointer" onclick="openReceiptModal()">
           <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-orange-500 to-amber-500 flex items-center justify-center shadow-lg shadow-orange-500/30">
             <i class="fa-solid fa-basket-shopping text-xl text-white"></i>
@@ -561,191 +552,41 @@
 
   <!-- JavaScript Logic -->
   <script>
-    // 菜單完整品項資料清單 (依圖片菜單完整還原，附精美示意圖與分類圖標)
+    // 菜單完整 30 項品項資料清單 (嚴格 1:1 依原始菜單照片)
     const MENU_ITEMS = [
-      // 1. 左側欄位
-      { 
-        id: 'm1', name: '三星蔥肉捲', price: 70, category: 'meat', hot: true, 
-        desc: '特選宜蘭三星蔥，油脂肉汁甘甜爆漿',
-        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80',
-        emoji: '🥓'
-      },
-      { 
-        id: 'm2', name: '美式肋排', price: 200, category: 'meat', hot: true, 
-        desc: '厚切原塊肋排，秘製醬汁炭火慢烤入味',
-        image: 'https://images.unsplash.com/photo-1544025162-d76694265947?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍖'
-      },
-      { 
-        id: 'm3', name: '炭烤豬五花', price: 150, category: 'meat', hot: false, 
-        desc: '外焦香內鮮嫩，油脂豐厚香氣十足',
-        image: 'https://images.unsplash.com/photo-1529692236671-f1f6cf9683ba?auto=format&fit=crop&w=600&q=80',
-        emoji: '🥩'
-      },
-      { 
-        id: 'm4', name: '脆皮大腸', price: 150, category: 'classic', hot: true, 
-        desc: '外皮酥脆香濃，老饕必點下酒招牌',
-        image: 'https://images.unsplash.com/photo-1598515214211-89d3c73ae83b?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm5', name: '香魚', price: 100, category: 'seafood', hot: false, 
-        desc: '鮮美海味，烤至金黃酥香、肉質細嫩',
-        image: 'https://images.unsplash.com/photo-1534422298391-e4f8c172dddb?auto=format&fit=crop&w=600&q=80',
-        emoji: '🐟'
-      },
-      { 
-        id: 'm6', name: '鯖魚', price: 100, category: 'seafood', hot: false, 
-        desc: '油脂豐潤，鹽烤提味最對味',
-        image: 'https://images.unsplash.com/photo-1519708227418-c8fd9a32b7a2?auto=format&fit=crop&w=600&q=80',
-        emoji: '🐟'
-      },
-      { 
-        id: 'm7', name: '大香腸', price: 100, category: 'meat', hot: false, 
-        desc: '巨無霸原味古早味手工大香腸',
-        image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=600&q=80',
-        emoji: '🌭'
-      },
-      { 
-        id: 'm8', name: '炭烤雞排', price: 80, category: 'meat', hot: true, 
-        desc: '人氣現烤大雞排，刷上香濃烤肉醬',
-        image: 'https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍗'
-      },
-      { 
-        id: 'm9', name: '秋刀魚', price: 70, category: 'seafood', hot: false, 
-        desc: '經典日式炭火鹽烤，甘甜回味',
-        image: 'https://images.unsplash.com/photo-1509722747041-616f39b57569?auto=format&fit=crop&w=600&q=80',
-        emoji: '🐟'
-      },
-      { 
-        id: 'm10', name: '梅花豬肉串', price: 65, category: 'meat', hot: false, 
-        desc: '肉質軟嫩適中，炭香四溢',
-        image: 'https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm11', name: '炭烤肥腸', price: 65, category: 'classic', hot: false, 
-        desc: '炭烤Q彈入味，香氣誘人',
-        image: 'https://images.unsplash.com/photo-1529193591184-b1d58069ecdd?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm12', name: '香腸', price: 50, category: 'meat', hot: false, 
-        desc: '經典台式炭烤香腸',
-        image: 'https://images.unsplash.com/photo-1587593810167-a84920ea0781?auto=format&fit=crop&w=600&q=80',
-        emoji: '🌭'
-      },
-      { 
-        id: 'm13', name: '七里香', price: 40, category: 'classic', hot: false, 
-        desc: '外皮烤至金黃酥脆，口感滑嫩',
-        image: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm14', name: '雞翅', price: 40, category: 'meat', hot: false, 
-        desc: '外皮金黃、肉質多汁飽滿',
-        image: 'https://images.unsplash.com/photo-1567620832903-9fc6debc209f?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍗'
-      },
-      { 
-        id: 'm15', name: '杏鮑菇', price: 40, category: 'veggie', hot: false, 
-        desc: '鮮脆多汁，吸滿炭烤秘製醬汁',
-        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍄'
-      },
+      // 左側欄位
+      { id: 'm1', name: '三星蔥肉捲', price: 70, category: 'meat', hot: true, catName: '肉品' },
+      { id: 'm2', name: '美式肋排', price: 200, category: 'meat', hot: true, catName: '肉品' },
+      { id: 'm3', name: '炭烤豬五花', price: 150, category: 'meat', hot: false, catName: '肉品' },
+      { id: 'm4', name: '脆皮大腸', price: 150, category: 'classic', hot: true, catName: '串燒' },
+      { id: 'm5', name: '香魚', price: 100, category: 'seafood', hot: false, catName: '海鮮' },
+      { id: 'm6', name: '鯖魚', price: 100, category: 'seafood', hot: false, catName: '海鮮' },
+      { id: 'm7', name: '大香腸', price: 100, category: 'meat', hot: false, catName: '肉品' },
+      { id: 'm8', name: '炭烤雞排', price: 80, category: 'meat', hot: true, catName: '肉品' },
+      { id: 'm9', name: '秋刀魚', price: 70, category: 'seafood', hot: false, catName: '海鮮' },
+      { id: 'm10', name: '梅花豬肉串', price: 65, category: 'meat', hot: false, catName: '肉品' },
+      { id: 'm11', name: '炭烤肥腸', price: 65, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm12', name: '香腸', price: 50, category: 'meat', hot: false, catName: '肉品' },
+      { id: 'm13', name: '七里香', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm14', name: '雞翅', price: 40, category: 'meat', hot: false, catName: '肉品' },
+      { id: 'm15', name: '杏鮑菇', price: 40, category: 'veggie', hot: false, catName: '時蔬' },
 
-      // 2. 右側欄位
-      { 
-        id: 'm16', name: '玉米筍', price: 50, category: 'veggie', hot: false, 
-        desc: '清甜脆口，炭火烘烤保留原汁原味',
-        image: 'https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=600&q=80',
-        emoji: '🌽'
-      },
-      { 
-        id: 'm17', name: '生香菇', price: 40, category: 'veggie', hot: false, 
-        desc: '厚實鮮香，多汁鮮嫩',
-        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍄'
-      },
-      { 
-        id: 'm18', name: '雞心', price: 40, category: 'classic', hot: false, 
-        desc: '爽脆有嚼勁，特製醬料提味',
-        image: 'https://images.unsplash.com/photo-1563245372-f21724e3856d?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm19', name: '雞軟骨', price: 40, category: 'classic', hot: false, 
-        desc: '卡滋卡滋喀脆口感，下酒良伴',
-        image: 'https://images.unsplash.com/photo-1541544741938-0af808871cc0?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm20', name: '櫛瓜', price: 40, category: 'veggie', hot: true, 
-        desc: '烤至微焦香甜，水嫩多汁超解膩',
-        image: 'https://images.unsplash.com/photo-1590779033100-9f60a05a013d?auto=format&fit=crop&w=600&q=80',
-        emoji: '🥒'
-      },
-      { 
-        id: 'm21', name: '雞皮', price: 40, category: 'classic', hot: false, 
-        desc: '慢火逼出多餘油脂，酥脆香濃',
-        image: 'https://images.unsplash.com/photo-1527477321055-43615b65171f?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm22', name: '貢丸', price: 40, category: 'classic', hot: false, 
-        desc: '彈牙多汁，炭烤經典',
-        image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍡'
-      },
-      { 
-        id: 'm23', name: '手工米血', price: 40, category: 'classic', hot: true, 
-        desc: '外層微酥內層軟Q，刷醬必吃',
-        image: 'https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm24', name: '花枝丸', price: 40, category: 'classic', hot: false, 
-        desc: '真材實料，口感Q彈鮮美',
-        image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍡'
-      },
-      { 
-        id: 'm25', name: '青椒', price: 30, category: 'veggie', hot: false, 
-        desc: '鮮甜爽口，烤肉解油膩首選',
-        image: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=600&q=80',
-        emoji: '🫑'
-      },
-      { 
-        id: 'm26', name: '豆干', price: 30, category: 'classic', hot: false, 
-        desc: '外層微焦香、內裡豆香綿密',
-        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm27', name: '百頁豆腐', price: 30, category: 'classic', hot: false, 
-        desc: '軟嫩細緻，吸附滿滿醬香',
-        image: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm28', name: '豆皮捲', price: 30, category: 'classic', hot: false, 
-        desc: '層層酥脆豆香濃郁',
-        image: 'https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm29', name: '甜不辣', price: 30, category: 'classic', hot: true, 
-        desc: '外酥內軟Q，炭烤靈魂招牌必點',
-        image: 'https://images.unsplash.com/photo-1569718212165-3a8278d5f624?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍢'
-      },
-      { 
-        id: 'm30', name: '酒 / 飲品', price: 60, category: 'drink', hot: false, 
-        desc: '金牌台灣啤酒 / 冷泡茶 / 飲品 (單瓶)',
-        image: 'https://images.unsplash.com/photo-1535958636474-b021ee887b13?auto=format&fit=crop&w=600&q=80',
-        emoji: '🍺'
-      }
+      // 右側欄位
+      { id: 'm16', name: '玉米筍', price: 50, category: 'veggie', hot: false, catName: '時蔬' },
+      { id: 'm17', name: '生香菇', price: 40, category: 'veggie', hot: false, catName: '時蔬' },
+      { id: 'm18', name: '雞心', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm19', name: '雞軟骨', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm20', name: '櫛瓜', price: 40, category: 'veggie', hot: true, catName: '時蔬' },
+      { id: 'm21', name: '雞皮', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm22', name: '貢丸', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm23', name: '手工米血', price: 40, category: 'classic', hot: true, catName: '串燒' },
+      { id: 'm24', name: '花枝丸', price: 40, category: 'classic', hot: false, catName: '串燒' },
+      { id: 'm25', name: '青椒', price: 30, category: 'veggie', hot: false, catName: '時蔬' },
+      { id: 'm26', name: '豆干', price: 30, category: 'classic', hot: false, catName: '豆製品' },
+      { id: 'm27', name: '百頁豆腐', price: 30, category: 'classic', hot: false, catName: '豆製品' },
+      { id: 'm28', name: '豆皮捲', price: 30, category: 'classic', hot: false, catName: '豆製品' },
+      { id: 'm29', name: '甜不辣', price: 30, category: 'classic', hot: true, catName: '串燒' },
+      { id: 'm30', name: '酒 / 飲品', price: 60, category: 'drink', hot: false, catName: '飲品' }
     ];
 
     // 訂單狀態儲存物件: { itemId: quantity }
@@ -774,7 +615,7 @@
       return `BBQ-${y}${m}${d}-${hh}${mm}${ss}`;
     }
 
-    // 渲染品項卡片 (包含示意圖與高畫質圖庫)
+    // 渲染純粹簡約且結構清晰的品項卡片
     function renderMenu() {
       const grid = document.getElementById('menuGrid');
       const emptyState = document.getElementById('emptySearchState');
@@ -782,8 +623,7 @@
 
       const filtered = MENU_ITEMS.filter(item => {
         const matchCategory = (currentCategory === 'all' || item.category === currentCategory);
-        const matchSearch = item.name.toLowerCase().includes(currentSearchTerm.toLowerCase()) || 
-                            item.desc.toLowerCase().includes(currentSearchTerm.toLowerCase());
+        const matchSearch = item.name.toLowerCase().includes(currentSearchTerm.toLowerCase());
         return matchCategory && matchSearch;
       });
 
@@ -800,85 +640,57 @@
 
         const card = document.createElement('div');
         card.id = `card-${item.id}`;
-        card.className = `bg-white rounded-2xl overflow-hidden border transition-all duration-200 flex flex-col justify-between shadow-sm relative group ${
+        card.className = `bg-white rounded-2xl p-4 sm:p-5 border transition-all duration-200 flex flex-col justify-between shadow-sm relative ${
           isSelected 
-            ? 'border-orange-500 ring-2 ring-orange-400/20 bg-orange-50/15' 
-            : 'border-stone-200/80 hover:border-orange-200 hover:shadow-md'
+            ? 'border-orange-500 ring-2 ring-orange-400/20 bg-orange-50/20' 
+            : 'border-stone-200/90 hover:border-orange-300 hover:shadow-md'
         }`;
 
         card.innerHTML = `
-          <!-- Item Thumbnail Image with Category & Hot Badges -->
-          <div class="relative w-full h-40 sm:h-44 bg-stone-100 overflow-hidden">
-            <img 
-              src="${item.image}" 
-              alt="${item.name}" 
-              loading="lazy"
-              class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1555939594-58d7cb561ad1?auto=format&fit=crop&w=600&q=80';"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-black/20 pointer-events-none"></div>
-            
-            <!-- Category & Emoji Badge -->
-            <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-              <span class="px-2 py-0.5 rounded-lg bg-stone-900/80 backdrop-blur-md text-white text-xs font-semibold shadow-sm flex items-center gap-1">
-                <span>${item.emoji}</span>
-                <span>${item.name}</span>
-              </span>
-            </div>
-
-            <!-- Hot Badge -->
-            ${item.hot ? `
-              <div class="absolute top-2.5 right-2.5">
-                <span class="text-[10px] font-black px-2 py-0.5 rounded-lg bg-red-600 text-white shadow-md flex items-center gap-1">
-                  <i class="fa-solid fa-fire text-amber-300 animate-pulse"></i> 人氣推薦
-                </span>
+          <div>
+            <!-- Header with Badges & Unit Price (單價嚴格向右對齊) -->
+            <div class="flex items-start justify-between gap-3">
+              <div>
+                <div class="flex items-center gap-1.5 flex-wrap">
+                  <h3 class="font-bold text-stone-900 text-base sm:text-lg tracking-wide">${item.name}</h3>
+                  <span class="text-[10px] font-semibold px-2 py-0.5 rounded-md bg-stone-100 text-stone-600 border border-stone-200">${item.catName}</span>
+                  ${item.hot ? '<span class="text-[10px] font-black px-1.5 py-0.5 rounded bg-red-100 text-red-600"><i class="fa-solid fa-fire text-red-500"></i> 人氣</span>' : ''}
+                </div>
               </div>
-            ` : ''}
-
-            <!-- Bottom Price Tag on Image -->
-            <div class="absolute bottom-2.5 right-2.5 bg-stone-900/90 backdrop-blur-md px-2.5 py-1 rounded-xl shadow-lg border border-orange-500/30">
-              <div class="text-xs text-stone-400 leading-none">單價</div>
-              <div class="text-xl sm:text-2xl font-black text-amber-400 price-num leading-none text-right">
-                NT$ ${item.price}
+              
+              <div class="text-right shrink-0">
+                <span class="text-[11px] text-stone-400 block text-right">單價</span>
+                <div class="text-xl sm:text-2xl font-black text-orange-600 price-num leading-none text-right">
+                  NT$ ${item.price}
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Card Content Body -->
-          <div class="p-4 flex-1 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between gap-2">
-                <h3 class="font-bold text-stone-900 text-base sm:text-lg">${item.name}</h3>
-                <span class="text-xs text-stone-400 font-mono">${item.category === 'meat' ? '肉品' : item.category === 'seafood' ? '海鮮' : item.category === 'veggie' ? '時蔬' : item.category === 'drink' ? '飲品' : '串燒'}</span>
-              </div>
-              <p class="text-xs text-stone-500 mt-1 line-clamp-2">${item.desc}</p>
+          <!-- Quantity Stepper & Subtotal Box (小計與數量向右對齊) -->
+          <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+            
+            <!-- Subtotal calculation badge -->
+            <div class="text-xs">
+              <span class="text-stone-400">小計: </span>
+              <span id="subtotal-${item.id}" class="font-bold ${isSelected ? 'text-orange-600' : 'text-stone-400'} price-num text-base sm:text-lg">
+                NT$ ${subtotal}
+              </span>
             </div>
 
-            <!-- Stepper & Subtotal (右側對齊) -->
-            <div class="mt-4 pt-3 border-t border-stone-100 flex items-center justify-between gap-2">
+            <!-- Stepper Buttons -->
+            <div class="flex items-center bg-stone-100 rounded-xl p-1 border border-stone-200">
+              <button onclick="updateQty('${item.id}', -1)" class="w-8 h-8 rounded-lg bg-white hover:bg-stone-200 active:scale-95 text-stone-700 font-bold flex items-center justify-center transition shadow-sm disabled:opacity-30" ${qty === 0 ? 'disabled' : ''}>
+                <i class="fa-solid fa-minus text-xs"></i>
+              </button>
               
-              <!-- Subtotal calculation badge -->
-              <div class="text-xs">
-                <span class="text-stone-400">小計: </span>
-                <span id="subtotal-${item.id}" class="font-bold ${isSelected ? 'text-orange-600' : 'text-stone-400'} price-num text-base sm:text-lg">
-                  NT$ ${subtotal}
-                </span>
-              </div>
-
-              <!-- Stepper Buttons -->
-              <div class="flex items-center bg-stone-100 rounded-xl p-1 border border-stone-200">
-                <button onclick="updateQty('${item.id}', -1)" class="w-8 h-8 rounded-lg bg-white hover:bg-stone-200 active:scale-95 text-stone-700 font-bold flex items-center justify-center transition shadow-sm disabled:opacity-30" ${qty === 0 ? 'disabled' : ''}>
-                  <i class="fa-solid fa-minus text-xs"></i>
-                </button>
-                
-                <input type="number" min="0" max="99" value="${qty}" id="input-${item.id}" onchange="setDirectQty('${item.id}', this.value)" class="w-10 text-center bg-transparent text-sm font-bold text-stone-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
-                
-                <button onclick="updateQty('${item.id}', 1)" class="w-8 h-8 rounded-lg bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold flex items-center justify-center transition shadow-sm">
-                  <i class="fa-solid fa-plus text-xs"></i>
-                </button>
-              </div>
-
+              <input type="number" min="0" max="99" value="${qty}" id="input-${item.id}" onchange="setDirectQty('${item.id}', this.value)" class="w-10 text-center bg-transparent text-sm font-bold text-stone-800 focus:outline-none [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none">
+              
+              <button onclick="updateQty('${item.id}', 1)" class="w-8 h-8 rounded-lg bg-orange-500 hover:bg-orange-600 active:scale-95 text-white font-bold flex items-center justify-center transition shadow-sm">
+                <i class="fa-solid fa-plus text-xs"></i>
+              </button>
             </div>
+
           </div>
         `;
 
@@ -931,13 +743,13 @@
         subtotalEl.innerText = `NT$ ${subtotal}`;
         
         if (isSelected) {
-          card.classList.add('border-orange-500', 'ring-2', 'ring-orange-400/20', 'bg-orange-50/15');
-          card.classList.remove('border-stone-200/80');
+          card.classList.add('border-orange-500', 'ring-2', 'ring-orange-400/20', 'bg-orange-50/20');
+          card.classList.remove('border-stone-200/90');
           subtotalEl.classList.add('text-orange-600');
           subtotalEl.classList.remove('text-stone-400');
         } else {
-          card.classList.remove('border-orange-500', 'ring-2', 'ring-orange-400/20', 'bg-orange-50/15');
-          card.classList.add('border-stone-200/80');
+          card.classList.remove('border-orange-500', 'ring-2', 'ring-orange-400/20', 'bg-orange-50/20');
+          card.classList.add('border-stone-200/90');
           subtotalEl.classList.remove('text-orange-600');
           subtotalEl.classList.add('text-stone-400');
         }
@@ -1093,7 +905,7 @@
             const row = document.createElement('div');
             row.className = 'grid grid-cols-12 items-center py-1.5 border-b border-stone-50 text-xs sm:text-sm';
             row.innerHTML = `
-              <span class="col-span-5 text-left font-semibold text-stone-800 truncate">${item.emoji} ${item.name}</span>
+              <span class="col-span-5 text-left font-semibold text-stone-800 truncate">${item.name}</span>
               <span class="col-span-2 text-right text-stone-500 mono-num">$${item.price}</span>
               <span class="col-span-2 text-right font-bold text-stone-700 mono-num">${qty}</span>
               <span class="col-span-3 text-right font-black text-orange-600 mono-num">NT$ ${subtotal}</span>
